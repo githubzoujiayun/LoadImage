@@ -122,7 +122,7 @@ public class LoadImage {
 
         final Bitmap map = memorycache.getBitmap(url);
         if (map != null) {
-            handler.post(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     String tag = targetview.getTag().toString();
@@ -142,12 +142,14 @@ public class LoadImage {
                                 scale.setDuration(500);
                                 targetview.startAnimation(scale);
                                 break;
+                            case NO:
+                                break;
                             }
 
                         }
                     }
                 }
-            });
+            },50);
             return;
         }
         // 从文件获取
@@ -164,7 +166,7 @@ public class LoadImage {
                 if (bitmap == null) {
 
                 } else {
-                    handler.post(new Runnable() {
+                    handler.postDelayed(new Runnable() {
 
                         @Override
                         public void run() {
@@ -185,12 +187,14 @@ public class LoadImage {
                                         scale.setDuration(500);
                                         targetview.startAnimation(scale);
                                         break;
+                                    case NO:
+                                        break;
                                     }
                                 }
                             }
 
                         }
-                    });
+                    },50);
                     return;
                 }
             }
@@ -238,7 +242,7 @@ public class LoadImage {
                     // 将Bitmap对象添加到内存缓存当中
                     memorycache.addCache(url, bitmap);
                 }
-                handler.post(new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (listener != null)
@@ -260,11 +264,13 @@ public class LoadImage {
                                     scale.setDuration(500);
                                     targetview.startAnimation(scale);
                                     break;
+                                case NO:
+                                    break;
                                 }
                             }
                         }
                     }
-                });
+                },50);
 
             } catch (Exception e) {
                 e.printStackTrace();

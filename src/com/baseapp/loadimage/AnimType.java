@@ -9,5 +9,5 @@ package com.baseapp.loadimage;
 *  
 */
 public enum AnimType {
-  ALPHA,ZOOM;
+  ALPHA,ZOOM,NO;
 }

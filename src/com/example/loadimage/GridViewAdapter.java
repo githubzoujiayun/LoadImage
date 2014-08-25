@@ -26,7 +26,7 @@ public class GridViewAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
         options = new DisplayImageOptions(true, BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.fdd), ImageView.ScaleType.FIT_XY,
-                Bitmap.Config.RGB_565,AnimType.ZOOM);
+                Bitmap.Config.RGB_565, AnimType.NO);
     }
 
     @Override
@@ -58,18 +58,20 @@ public class GridViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.iv.setTag(urls[position]);
-        LoadImage.getInstance().displayImage(holder.iv, urls[position], options,new ImageLoadListener() {
-            
-            @Override
-            public void onLoadStart() {
-              System.out.println(position+"开始");                
-            }
-            
-            @Override
-            public void onLoadFinish() {
-                System.out.println(position+"结束"); 
-            }
-        });
+        holder.iv.setImageResource(R.drawable.fdd);
+        LoadImage.getInstance().displayImage(holder.iv, urls[position], options,
+                new ImageLoadListener() {
+
+                    @Override
+                    public void onLoadStart() {
+                        System.out.println(position + "开始");
+                    }
+
+                    @Override
+                    public void onLoadFinish() {
+                        System.out.println(position + "结束");
+                    }
+                });
 
         return convertView;
     }
