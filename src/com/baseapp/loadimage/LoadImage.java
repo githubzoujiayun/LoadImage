@@ -78,8 +78,7 @@ public class LoadImage {
     }
 
     /*
-     * 初始化
-     * 该方法一定要执行 建议在application类中进行初始哈
+     * 初始化 该方法一定要执行 建议在application类中进行初始哈
      */
     public void init(LoaderImageOptions loaderImageOptions) {
         memorycache = new ImageMemoryCache(loaderImageOptions.getMemorycahesize());
@@ -105,8 +104,7 @@ public class LoadImage {
             this.options = options;
             this.targetview.setScaleType(options.getImagescaletype());
             this.listener = listener;
-            if (listener != null)
-                listener.onLoadStart();
+
         }
 
         @Override
@@ -181,8 +179,8 @@ public class LoadImage {
                                         targetview.startAnimation(anim);
                                         break;
                                     case ZOOM:
-                                        ScaleAnimation scale = new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f,
-                                                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+                                        ScaleAnimation scale = new ScaleAnimation(0.5f, 1.0f, 0.5f,
+                                                1.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
                                                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
                                         scale.setDuration(500);
                                         targetview.startAnimation(scale);
@@ -209,6 +207,14 @@ public class LoadImage {
      */
     private void getBitmapFromNet(final ImageView targetview, final String url,
             final DisplayImageOptions options, final ImageLoadListener listener) {
+        handler.post(new Runnable() {
+
+            @Override
+            public void run() {
+                if (listener != null)
+                    listener.onLoadStart();
+            }
+        });
         DiskLruCache.Editor editor = filecache.getEditor(url);
         if (editor != null) {
             OutputStream outputStream;
@@ -248,8 +254,8 @@ public class LoadImage {
                                     targetview.startAnimation(anim);
                                     break;
                                 case ZOOM:
-                                    ScaleAnimation scale = new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f,
-                                            ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+                                    ScaleAnimation scale = new ScaleAnimation(0.5f, 1.0f, 0.5f,
+                                            1.0f, ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
                                             ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
                                     scale.setDuration(500);
                                     targetview.startAnimation(scale);
