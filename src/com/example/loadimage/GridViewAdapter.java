@@ -2,6 +2,7 @@ package com.example.loadimage;
 
 import com.baseapp.loadimage.AnimType;
 import com.baseapp.loadimage.DisplayImageOptions;
+import com.baseapp.loadimage.ImageLoadListener;
 import com.baseapp.loadimage.LoadImage;
 
 import android.content.Context;
@@ -46,7 +47,7 @@ public class GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
@@ -57,7 +58,18 @@ public class GridViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.iv.setTag(urls[position]);
-        LoadImage.getInstance().displayImage(holder.iv, urls[position], options);
+        LoadImage.getInstance().displayImage(holder.iv, urls[position], options,new ImageLoadListener() {
+            
+            @Override
+            public void onLoadStart() {
+              System.out.println(position+"开始");                
+            }
+            
+            @Override
+            public void onLoadFinish() {
+                System.out.println(position+"结束"); 
+            }
+        });
 
         return convertView;
     }

@@ -63,8 +63,6 @@ public class LoadImage {
             ImageLoadListener listener) {
         target.setScaleType(displayImageOptions.getImagescaletype());
         BitmapTask task = new BitmapTask(target, url, displayImageOptions, listener);
-        if (listener != null)
-            listener.onLoadStart();
         threadpool.execute(task);
     }
 
@@ -107,11 +105,13 @@ public class LoadImage {
             this.options = options;
             this.targetview.setScaleType(options.getImagescaletype());
             this.listener = listener;
+            if (listener != null)
+                listener.onLoadStart();
         }
 
         @Override
         public void run() {
-            dowanload(targetview, url, options, null);
+            dowanload(targetview, url, options, listener);
         }
     }
 
